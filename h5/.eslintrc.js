@@ -6,17 +6,17 @@ module.exports = {
   },
 
   parserOptions: {
-    parser: '@typescript-eslint/parser'
+    parser: "@typescript-eslint/parser"
   },
 
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    quotes: "off",
+    semi: "off",
+    "comma-dangle": "off",
+    "vue/require-v-for-key": "off"
   },
 
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/standard',
-    '@vue/typescript'
-  ]
-}
+  extends: ["plugin:vue/vue3-essential", "@vue/standard", "@vue/typescript"]
+};
