@@ -2,35 +2,60 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 16:29:37
+ * @LastEditTime: 2020-12-31 17:54:02
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
 -->
 <template>
-  <div class="main" @drag="handleDrag" @dragover="handleDragOver"></div>
+  <div
+    class="main"
+    @dragover="handleDragOver"
+    @dragleave="handleDragLeave"
+    @dragenter="handleDragEnter"
+    @drop="handleDrop"
+  >
+    <template v-for="page in pages">
+      <component :is="`h5-${page.type}`"></component>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, ref } from "vue";
+import H5Image from "../h5-components/h5-image.vue";
 export default defineComponent({
   name: "container",
   props: {
     msg: String,
   },
+  components: {
+    H5Image,
+  },
   setup: () => {
-    const handleDrag = (e: Event) => {
-      console.log(e);
+    const pages: any = ref([]);
+    const handleDrop = (e: any) => {
+      const type = e.dataTransfer.getData("text");
+      pages.value.push({
+        type,
+        name: `${type}`,
+      });
+    };
+    const handleDragLeave = (e: any) => {
       e.preventDefault();
     };
-    const handleDragOver = (e: Event) => {
-      console.log("handleDragOver");
-      console.log(e);
+    const handleDragOver = (e: any) => {
+      e.preventDefault();
+    };
+    const handleDragEnter = (e: any) => {
+      e.preventDefault();
     };
     return {
-      handleDrag,
+      handleDrop,
       handleDragOver,
+      handleDragEnter,
+      handleDragLeave,
+      pages,
     };
   },
 });

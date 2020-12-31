@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 16:17:06
+ * @LastEditTime: 2020-12-31 17:37:54
  * @Description: file content
  * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
@@ -11,17 +11,17 @@
   <div class="components">
     <div
       class="component-item"
-      @dragstart="drag"
+      @dragstart="drag(component, $event)"
       draggable="true"
-      v-for="i in 10"
+      v-for="component in components"
     >
-      {{ i }}
+      {{ component.label }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Components",
@@ -29,11 +29,29 @@ export default defineComponent({
     msg: String,
   },
   setup: () => {
-    const drag = (e: any) => {
-      e.dataTransfer.setData("i", 1);
-      console.log(e);
+    const components = ref([
+      {
+        name: "image",
+        label: "图片",
+      },
+      {
+        name: "image",
+        label: "轮播图",
+      },
+      {
+        name: "video",
+        label: "视频",
+      },
+      {
+        name: "b-button",
+        label: "驻底按钮",
+      },
+    ]);
+    const drag = (component: any, e: any) => {
+      e.dataTransfer.setData("text", component.name);
     };
     return {
+      components,
       drag,
     };
   },

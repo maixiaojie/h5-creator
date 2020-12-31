@@ -15,7 +15,9 @@ module.exports = {
     quotes: "off",
     semi: "off",
     "comma-dangle": "off",
-    "vue/require-v-for-key": "off"
+    "vue/require-v-for-key": "off",
+    "vue/valid-v-for": "off",
+    "vue/no-unused-components": "off"
   },
 
   extends: ["plugin:vue/vue3-essential", "@vue/standard", "@vue/typescript"]

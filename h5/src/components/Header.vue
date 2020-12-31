@@ -2,13 +2,13 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 15:40:28
+ * @LastEditTime: 2020-12-31 17:42:50
  * @Description: file content
  * @FilePath: /h5/src/components/Header.vue
  * @powerd by hundun
 -->
 <template>
-  <div class="header">121</div>
+  <div class="header">活动h5编辑器</div>
 </template>
 
 <script lang="ts">
