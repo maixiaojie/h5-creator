@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-04 11:45:15
+ * @LastEditTime: 2021-01-04 11:53:56
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -66,6 +66,7 @@ export default defineComponent({
     };
     const handleCompDel = (i: number, comp: any) => {
       console.log(i, comp);
+      console.log(pages.value)
     };
     return {
       handleDrop,
