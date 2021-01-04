@@ -1,0 +1,79 @@
+<!--
+ * @Author: wenyujie
+ * @LastEditors: wenyujie
+ * @Date: 2021-01-04 10:25:21
+ * @LastEditTime: 2021-01-04 11:46:17
+ * @Description: file content
+ * @FilePath: /h5/src/components/component-wrapper.vue
+ * @powerd by hundun
+-->
+<!--
+ * @Author: wenyujie
+ * @LastEditors: wenyujie
+ * @Date: 2020-12-31 14:35:36
+ * @LastEditTime: 2020-12-31 17:37:54
+ * @Description: file content
+ * @FilePath: /h5/src/components/components.vue
+ * @powerd by hundun
+-->
+<template>
+  <div class="component-wrapper" @click="HandleClick">
+    <slot></slot>
+    <span class="del" @click.stop="handleDel">×</span>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "ComponentWrapper",
+  props: {
+    index: {
+      type: Number,
+      default: -1,
+    },
+    info: Object,
+  },
+  setup: (props, { emit }) => {
+    const HandleClick = () => {
+      emit("on-click", props.index, props.info);
+    };
+    const handleDel = () => {
+      emit("on-del", props.index, props.info);
+    };
+    return {
+      HandleClick,
+      handleDel,
+    };
+  },
+});
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.component-wrapper {
+  cursor: move;
+  margin: 0 auto;
+  position: relative;
+}
+.component-wrapper span.del {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 18px;
+  height: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.component-wrapper:hover {
+  outline: 1px solid #fdcd00;
+}
+.component-wrapper:hover span.del {
+  display: flex;
+}
+</style>

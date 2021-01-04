@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 17:38:54
- * @LastEditTime: 2020-12-31 17:49:45
+ * @LastEditTime: 2021-01-04 11:02:56
  * @Description: file content
  * @FilePath: /h5/src/h5-components/h5-image.vue
  * @powerd by hundun
@@ -35,5 +35,6 @@ export default defineComponent({
 .h5-image img {
   width: 100%;
   max-width: 100%;
+  vertical-align: bottom;
 }
 </style>

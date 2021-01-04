@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 17:54:02
+ * @LastEditTime: 2021-01-04 11:45:15
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -15,14 +15,23 @@
     @dragenter="handleDragEnter"
     @drop="handleDrop"
   >
-    <template v-for="page in pages">
-      <component :is="`h5-${page.type}`"></component>
+    <template v-for="(page, index) in pages">
+      <ComponentWrapper
+        :index="index"
+        :info="page"
+        @on-click="handleCompClick"
+        @on-del="handleCompDel"
+      >
+        <component :is="`h5-${page.type}`"></component>
+      </ComponentWrapper>
     </template>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { guid } from "../utils/index";
+import ComponentWrapper from "./component-wrapper.vue";
 import H5Image from "../h5-components/h5-image.vue";
 export default defineComponent({
   name: "container",
@@ -30,6 +39,7 @@ export default defineComponent({
     msg: String,
   },
   components: {
+    ComponentWrapper,
     H5Image,
   },
   setup: () => {
@@ -37,6 +47,7 @@ export default defineComponent({
     const handleDrop = (e: any) => {
       const type = e.dataTransfer.getData("text");
       pages.value.push({
+        uid: guid(),
         type,
         name: `${type}`,
       });
@@ -50,12 +61,20 @@ export default defineComponent({
     const handleDragEnter = (e: any) => {
       e.preventDefault();
     };
+    const handleCompClick = (i: number, comp: any) => {
+      console.log(i, comp);
+    };
+    const handleCompDel = (i: number, comp: any) => {
+      console.log(i, comp);
+    };
     return {
       handleDrop,
       handleDragOver,
       handleDragEnter,
       handleDragLeave,
       pages,
+      handleCompClick,
+      handleCompDel,
     };
   },
 });

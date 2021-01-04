@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 17:37:54
+ * @LastEditTime: 2021-01-04 10:27:16
  * @Description: file content
  * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
@@ -25,6 +25,7 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Components",
+  components: {},
   props: {
     msg: String,
   },
