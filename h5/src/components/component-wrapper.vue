@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-04 10:25:21
- * @LastEditTime: 2021-01-04 11:46:17
+ * @LastEditTime: 2021-01-05 11:03:55
  * @Description: file content
  * @FilePath: /h5/src/components/component-wrapper.vue
  * @powerd by hundun
@@ -17,7 +17,14 @@
  * @powerd by hundun
 -->
 <template>
-  <div class="component-wrapper" @click="HandleClick">
+  <div
+    class="component-wrapper"
+    @dragstart="HandleDrag"
+    @dragenter="HandleDragEnter"
+    @dragend="HandleDragEnd"
+    draggable="true"
+    @click="HandleClick"
+  >
     <slot></slot>
     <span class="del" @click.stop="handleDel">×</span>
   </div>
@@ -42,7 +49,25 @@ export default defineComponent({
     const handleDel = () => {
       emit("on-del", props.index, props.info);
     };
+    const HandleDrag = (e: any) => {
+      const data = {
+        type: "move-component",
+        data: props.index,
+      };
+      e.dataTransfer.setData("text", JSON.stringify(data));
+      emit("on-dragstart", e, props.index);
+    };
+    const HandleDragEnter = (e: any) => {
+      emit("on-dragenter", e, props.index);
+    };
+    const HandleDragEnd = (e: any) => {
+      emit("on-dragend", e, props.index);
+    };
+
     return {
+      HandleDrag,
+      HandleDragEnter,
+      HandleDragEnd,
       HandleClick,
       handleDel,
     };
@@ -57,6 +82,16 @@ export default defineComponent({
   margin: 0 auto;
   position: relative;
 }
+.component-wrapper:hover {
+  outline: 1px solid #fdcd00;
+}
+.component-wrapper:hover span.del {
+  display: flex;
+}
+.component-wrapper.active {
+  opacity: 0.2;
+  outline: 1px solid #db2727;
+}
 .component-wrapper span.del {
   position: absolute;
   cursor: pointer;
@@ -69,11 +104,5 @@ export default defineComponent({
   display: none;
   align-items: center;
   justify-content: center;
-}
-.component-wrapper:hover {
-  outline: 1px solid #fdcd00;
-}
-.component-wrapper:hover span.del {
-  display: flex;
 }
 </style>

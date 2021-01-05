@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-04 11:53:56
+ * @LastEditTime: 2021-01-05 11:07:57
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -15,16 +15,22 @@
     @dragenter="handleDragEnter"
     @drop="handleDrop"
   >
-    <template v-for="(page, index) in pages">
-      <ComponentWrapper
-        :index="index"
-        :info="page"
-        @on-click="handleCompClick"
-        @on-del="handleCompDel"
-      >
-        <component :is="`h5-${page.type}`"></component>
-      </ComponentWrapper>
-    </template>
+    <transition-group name="flip-list">
+      <template v-for="(page, index) in pages" :key="page.uid">
+        <ComponentWrapper
+          :index="index"
+          :info="page"
+          :class="{ active: index === activeIndex }"
+          @on-click="handleCompClick"
+          @on-del="handleCompDel"
+          @on-dragstart="handleCompDragStart"
+          @on-dragenter="handleCompDragEnter"
+          @on-dragend="handleCompDragEnd"
+        >
+          <component :is="`h5-${page.type}`"></component>
+        </ComponentWrapper>
+      </template>
+    </transition-group>
   </div>
 </template>
 
@@ -45,12 +51,15 @@ export default defineComponent({
   setup: () => {
     const pages: any = ref([]);
     const handleDrop = (e: any) => {
-      const type = e.dataTransfer.getData("text");
-      pages.value.push({
-        uid: guid(),
-        type,
-        name: `${type}`,
-      });
+      const text = e.dataTransfer.getData("text");
+      const { type, data } = JSON.parse(text);
+      if (type === "add-component") {
+        pages.value.push({
+          uid: guid(),
+          type: data,
+          name: `${data}`,
+        });
+      }
     };
     const handleDragLeave = (e: any) => {
       e.preventDefault();
@@ -65,8 +74,26 @@ export default defineComponent({
       console.log(i, comp);
     };
     const handleCompDel = (i: number, comp: any) => {
-      console.log(i, comp);
-      console.log(pages.value)
+      pages.value.splice(i, 1);
+    };
+    const oldIndex = ref(0);
+    const newIndex = ref(0);
+    const activeIndex = ref(-1);
+    const handleCompDragStart = (e: any, i: number) => {
+      oldIndex.value = i;
+      activeIndex.value = i;
+    };
+    const handleCompDragEnter = (e: any, i: number) => {
+      newIndex.value = i;
+    };
+    const handleCompDragEnd = (e: any, i: number) => {
+      if (oldIndex.value !== newIndex.value) {
+        const newPages = [...pages.value];
+        newPages.splice(oldIndex.value, 1);
+        newPages.splice(newIndex.value, 0, pages.value[oldIndex.value]);
+        pages.value = [...newPages];
+        activeIndex.value = -1;
+      }
     };
     return {
       handleDrop,
@@ -74,8 +101,12 @@ export default defineComponent({
       handleDragEnter,
       handleDragLeave,
       pages,
+      activeIndex,
       handleCompClick,
       handleCompDel,
+      handleCompDragStart,
+      handleCompDragEnter,
+      handleCompDragEnd,
     };
   },
 });
@@ -89,5 +120,8 @@ export default defineComponent({
   background: #fff;
   margin: 0 auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+.flip-list-move {
+  transition: transform 0.3s ease-in;
 }
 </style>

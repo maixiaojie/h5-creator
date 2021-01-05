@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-04 10:27:16
+ * @LastEditTime: 2021-01-05 10:19:56
  * @Description: file content
  * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
@@ -49,7 +49,11 @@ export default defineComponent({
       },
     ]);
     const drag = (component: any, e: any) => {
-      e.dataTransfer.setData("text", component.name);
+      const data = {
+        type: "add-component",
+        data: component.name,
+      };
+      e.dataTransfer.setData("text", JSON.stringify(data));
     };
     return {
       components,
