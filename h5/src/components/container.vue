@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 16:27:02
+ * @LastEditTime: 2021-01-05 16:51:51
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -96,7 +96,8 @@ export default defineComponent({
 <style scoped>
 .main {
   width: 375px;
-  min-height: 700px;
+  height: 700px;
+  overflow-y: scroll;
   background: #fff;
   margin: 0 auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);

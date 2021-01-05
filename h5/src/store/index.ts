@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-05 16:31:06
+ * @LastEditTime: 2021-01-05 16:43:58
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
@@ -49,6 +49,12 @@ export default createStore({
     ],
     // 页面内容
     page_info: {
+      title: "",
+      share_info: {
+        share_title: "",
+        share_content: "",
+        share_logo: ""
+      },
       components: []
     }
   },
@@ -56,9 +62,12 @@ export default createStore({
     addNewComponent(state: any, { name }) {
       const comp = state.components.filter((e: any) => e.name === name);
       if (comp.length > 0) {
-        const componentInfo: any = Object.assign(comp[0], {
-          uid: guid()
-        });
+        const componentInfo: any = Object.assign(
+          {
+            uid: guid()
+          },
+          comp[0]
+        );
         state.page_info.components.push(componentInfo);
       }
     },
