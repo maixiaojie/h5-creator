@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-04 10:25:21
- * @LastEditTime: 2021-01-05 14:40:37
+ * @LastEditTime: 2021-01-05 16:10:59
  * @Description: file content
  * @FilePath: /h5/src/components/component-wrapper.vue
  * @powerd by hundun

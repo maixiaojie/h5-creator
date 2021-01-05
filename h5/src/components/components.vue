@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 12:54:39
+ * @LastEditTime: 2021-01-05 16:04:38
  * @Description: file content
  * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
@@ -22,33 +22,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-
+import { computed, defineComponent } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Components",
   components: {},
-  props: {
-    msg: String,
-  },
   setup: () => {
-    const components = ref([
-      {
-        name: "image",
-        label: "图片",
-      },
-      {
-        name: "image",
-        label: "轮播图",
-      },
-      {
-        name: "video",
-        label: "视频",
-      },
-      {
-        name: "b-button",
-        label: "驻底按钮",
-      },
-    ]);
+    const store = useStore();
     const handleDrag = (component: any, e: any) => {
       const data = {
         type: "add-component",
@@ -56,11 +36,11 @@ export default defineComponent({
       };
       e.dataTransfer.setData("text", JSON.stringify(data));
     };
-    const handleDbClick = () => {
-      console.log("dbclick");
+    const handleDbClick = (component: any) => {
+      store.commit("addNewComponent", { name: component.name });
     };
     return {
-      components,
+      components: computed(() => store.state.components),
       handleDrag,
       handleDbClick,
     };

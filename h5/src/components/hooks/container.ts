@@ -2,27 +2,21 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-05 11:51:17
- * @LastEditTime: 2021-01-05 12:50:33
+ * @LastEditTime: 2021-01-05 16:02:18
  * @Description: file content
  * @FilePath: /h5/src/components/hooks/container.ts
  * @powerd by hundun
  */
-import { ref } from "vue";
-import { guid } from "../../utils/index";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 export const useContainerHooks = () => {
-  const pages: any = ref([]);
-  const addNewComp = (data: any) => {
-    pages.value.push({
-      uid: guid(),
-      type: data,
-      name: `${data}`
-    });
-  };
+  const store = useStore();
   const handleDrop = (e: any) => {
     const text = e.dataTransfer.getData("text");
     const { type, data } = JSON.parse(text);
+
     if (type === "add-component") {
-      addNewComp(data);
+      store.commit("addNewComponent", { name: data });
     }
   };
   const handleDragLeave = (e: any) => {
@@ -35,7 +29,7 @@ export const useContainerHooks = () => {
     e.preventDefault();
   };
   return {
-    pages,
+    pages: computed(() => store.state.page_info.components),
     handleDrop,
     handleDragLeave,
     handleDragOver,
@@ -43,7 +37,9 @@ export const useContainerHooks = () => {
   };
 };
 
-export const useComponentHooks = (pages: any) => {
+export const useComponentHooks = () => {
+  const store = useStore();
+  const pages = computed(() => store.state.page_info.components);
   const oldIndex = ref(0);
   const newIndex = ref(0);
   const activeIndex = ref(-1);
@@ -51,16 +47,11 @@ export const useComponentHooks = (pages: any) => {
     console.log(i, comp);
   };
   const handleCompDel = (i: number, comp: any) => {
-    pages.value.splice(i, 1);
+    store.commit("delComponent", i);
   };
   // 交换两个组件的位置
   const swagComp = (oldIndex: number, newIndex: number) => {
-    if (oldIndex !== newIndex) {
-      const newPages = [...pages.value];
-      newPages.splice(oldIndex, 1);
-      newPages.splice(newIndex, 0, pages.value[oldIndex]);
-      pages.value = [...newPages];
-    }
+    store.commit("swapComponent", { oldIndex, newIndex });
   };
   const handleCompMoveUp = (i: number, comp: any) => {
     if (i - 1 > -1) {

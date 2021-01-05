@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 14:13:20
+ * @LastEditTime: 2021-01-05 15:47:06
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -29,7 +29,7 @@
           @on-dragenter="handleCompDragEnter"
           @on-dragend="handleCompDragEnd"
         >
-          <component :is="`h5-${page.type}`"></component>
+          <component :is="`h5-${page.name}`"></component>
         </ComponentWrapper>
       </template>
     </transition-group>
@@ -70,7 +70,7 @@ export default defineComponent({
       handleCompDragStart,
       handleCompDragEnter,
       handleCompDragEnd,
-    } = useComponentHooks(pages);
+    } = useComponentHooks();
 
     return {
       handleDrop,
