@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-04 10:25:21
- * @LastEditTime: 2021-01-05 11:32:21
+ * @LastEditTime: 2021-01-05 14:40:37
  * @Description: file content
  * @FilePath: /h5/src/components/component-wrapper.vue
  * @powerd by hundun
@@ -95,8 +95,7 @@ export default defineComponent({
   display: flex;
 }
 .component-wrapper.active {
-  opacity: 0.2;
-  outline: 1px solid #db2727;
+  filter: blur(2px);
 }
 .component-wrapper i.operate {
   position: absolute;

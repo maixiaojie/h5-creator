@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 10:19:56
+ * @LastEditTime: 2021-01-05 12:54:39
  * @Description: file content
  * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
@@ -11,8 +11,9 @@
   <div class="components">
     <div
       class="component-item"
-      @dragstart="drag(component, $event)"
+      @dragstart="handleDrag(component, $event)"
       draggable="true"
+      @dblclick="handleDbClick(component, $event)"
       v-for="component in components"
     >
       {{ component.label }}
@@ -48,16 +49,20 @@ export default defineComponent({
         label: "驻底按钮",
       },
     ]);
-    const drag = (component: any, e: any) => {
+    const handleDrag = (component: any, e: any) => {
       const data = {
         type: "add-component",
         data: component.name,
       };
       e.dataTransfer.setData("text", JSON.stringify(data));
     };
+    const handleDbClick = () => {
+      console.log("dbclick");
+    };
     return {
       components,
-      drag,
+      handleDrag,
+      handleDbClick,
     };
   },
 });

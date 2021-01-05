@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 11:38:40
+ * @LastEditTime: 2021-01-05 14:13:20
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -37,10 +37,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { guid } from "../utils/index";
+import { defineComponent } from "vue";
 import ComponentWrapper from "./component-wrapper.vue";
 import H5Image from "../h5-components/h5-image.vue";
+import H5Video from "../h5-components/h5-video.vue";
+import { useComponentHooks, useContainerHooks } from "./hooks/container";
 export default defineComponent({
   name: "container",
   props: {
@@ -49,67 +50,28 @@ export default defineComponent({
   components: {
     ComponentWrapper,
     H5Image,
+    H5Video,
   },
   setup: () => {
-    const pages: any = ref([]);
-    const handleDrop = (e: any) => {
-      const text = e.dataTransfer.getData("text");
-      const { type, data } = JSON.parse(text);
-      if (type === "add-component") {
-        pages.value.push({
-          uid: guid(),
-          type: data,
-          name: `${data}`,
-        });
-      }
-    };
-    const handleDragLeave = (e: any) => {
-      e.preventDefault();
-    };
-    const handleDragOver = (e: any) => {
-      e.preventDefault();
-    };
-    const handleDragEnter = (e: any) => {
-      e.preventDefault();
-    };
-    const handleCompClick = (i: number, comp: any) => {
-      console.log(i, comp);
-    };
-    const handleCompDel = (i: number, comp: any) => {
-      pages.value.splice(i, 1);
-    };
-    const swagComp = (oldIndex: number, newIndex: number) => {
-      if (oldIndex !== newIndex) {
-        const newPages = [...pages.value];
-        newPages.splice(oldIndex, 1);
-        newPages.splice(newIndex, 0, pages.value[oldIndex]);
-        pages.value = [...newPages];
-      }
-    };
-    const handleCompMoveUp = (i: number, comp: any) => {
-      if (i - 1 > -1) {
-        swagComp(i, i - 1);
-      }
-    };
-    const handleCompMoveDown = (i: number, comp: any) => {
-      if (i + 1 < pages.value.length) {
-        swagComp(i, i + 1);
-      }
-    };
-    const oldIndex = ref(0);
-    const newIndex = ref(0);
-    const activeIndex = ref(-1);
-    const handleCompDragStart = (e: any, i: number) => {
-      oldIndex.value = i;
-      activeIndex.value = i;
-    };
-    const handleCompDragEnter = (e: any, i: number) => {
-      newIndex.value = i;
-    };
-    const handleCompDragEnd = (e: any, i: number) => {
-      swagComp(oldIndex.value, newIndex.value);
-      activeIndex.value = -1;
-    };
+    const {
+      pages,
+      handleDrop,
+      handleDragLeave,
+      handleDragOver,
+      handleDragEnter,
+    } = useContainerHooks();
+    const {
+      oldIndex,
+      activeIndex,
+      handleCompClick,
+      handleCompDel,
+      handleCompMoveUp,
+      handleCompMoveDown,
+      handleCompDragStart,
+      handleCompDragEnter,
+      handleCompDragEnd,
+    } = useComponentHooks(pages);
+
     return {
       handleDrop,
       handleDragOver,
