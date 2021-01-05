@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 16:57:17
+ * @LastEditTime: 2021-01-05 17:48:07
  * @Description: file content
  * @FilePath: /h5/src/components/Header.vue
  * @powerd by hundun
@@ -17,7 +17,7 @@
  * @powerd by hundun
 -->
 <template>
-  <div class="header">活动h5编辑器</div>
+  <div class="header">h5在线编辑器(h5-online-creator)</div>
 </template>
 
 <script lang="ts">

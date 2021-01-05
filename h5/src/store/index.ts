@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-05 16:43:58
+ * @LastEditTime: 2021-01-05 17:48:44
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
@@ -22,11 +22,11 @@ export default createStore({
           src: "http://seopic.699pic.com/photo/50051/4111.jpg_wh1200.jpg"
         }
       },
-      {
-        name: "images",
-        label: "轮播图",
-        attrs: {}
-      },
+      // {
+      //   name: "images",
+      //   label: "轮播图",
+      //   attrs: {}
+      // },
       {
         name: "video",
         label: "视频",
@@ -41,11 +41,11 @@ export default createStore({
           // 是否自动播放
           autoplay: false
         }
-      },
-      {
-        name: "b-button",
-        label: "驻底按钮"
       }
+      // {
+      //   name: "b-button",
+      //   label: "驻底按钮"
+      // }
     ],
     // 页面内容
     page_info: {
