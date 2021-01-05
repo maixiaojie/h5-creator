@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/maixiaojie/h5-creator/compare/v0.1.1...v0.1.2) (2021-01-05)
+
+
+### Features
+
+* 组件、页面数据抽象 ([2a8c0bb](https://github.com/maixiaojie/h5-creator/commit/2a8c0bbb434815cb2019dd667597cba8b9078778))
+
 ### 0.1.1 (2021-01-05)
 
 
