@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 11:07:57
+ * @LastEditTime: 2021-01-05 11:38:40
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -20,9 +20,11 @@
         <ComponentWrapper
           :index="index"
           :info="page"
-          :class="{ active: index === activeIndex }"
+          :class="{ active: index === activeIndex && oldIndex === index }"
           @on-click="handleCompClick"
           @on-del="handleCompDel"
+          @on-moveup="handleCompMoveUp"
+          @on-movedown="handleCompMoveDown"
           @on-dragstart="handleCompDragStart"
           @on-dragenter="handleCompDragEnter"
           @on-dragend="handleCompDragEnd"
@@ -76,6 +78,24 @@ export default defineComponent({
     const handleCompDel = (i: number, comp: any) => {
       pages.value.splice(i, 1);
     };
+    const swagComp = (oldIndex: number, newIndex: number) => {
+      if (oldIndex !== newIndex) {
+        const newPages = [...pages.value];
+        newPages.splice(oldIndex, 1);
+        newPages.splice(newIndex, 0, pages.value[oldIndex]);
+        pages.value = [...newPages];
+      }
+    };
+    const handleCompMoveUp = (i: number, comp: any) => {
+      if (i - 1 > -1) {
+        swagComp(i, i - 1);
+      }
+    };
+    const handleCompMoveDown = (i: number, comp: any) => {
+      if (i + 1 < pages.value.length) {
+        swagComp(i, i + 1);
+      }
+    };
     const oldIndex = ref(0);
     const newIndex = ref(0);
     const activeIndex = ref(-1);
@@ -87,13 +107,8 @@ export default defineComponent({
       newIndex.value = i;
     };
     const handleCompDragEnd = (e: any, i: number) => {
-      if (oldIndex.value !== newIndex.value) {
-        const newPages = [...pages.value];
-        newPages.splice(oldIndex.value, 1);
-        newPages.splice(newIndex.value, 0, pages.value[oldIndex.value]);
-        pages.value = [...newPages];
-        activeIndex.value = -1;
-      }
+      swagComp(oldIndex.value, newIndex.value);
+      activeIndex.value = -1;
     };
     return {
       handleDrop,
@@ -102,8 +117,11 @@ export default defineComponent({
       handleDragLeave,
       pages,
       activeIndex,
+      oldIndex,
       handleCompClick,
       handleCompDel,
+      handleCompMoveDown,
+      handleCompMoveUp,
       handleCompDragStart,
       handleCompDragEnter,
       handleCompDragEnd,

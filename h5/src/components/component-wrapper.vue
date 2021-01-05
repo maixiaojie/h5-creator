@@ -2,18 +2,9 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-04 10:25:21
- * @LastEditTime: 2021-01-05 11:03:55
+ * @LastEditTime: 2021-01-05 11:32:21
  * @Description: file content
  * @FilePath: /h5/src/components/component-wrapper.vue
- * @powerd by hundun
--->
-<!--
- * @Author: wenyujie
- * @LastEditors: wenyujie
- * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2020-12-31 17:37:54
- * @Description: file content
- * @FilePath: /h5/src/components/components.vue
  * @powerd by hundun
 -->
 <template>
@@ -26,7 +17,21 @@
     @click="HandleClick"
   >
     <slot></slot>
-    <span class="del" @click.stop="handleDel">×</span>
+    <i
+      class="operate del el-icon-delete"
+      title="删除"
+      @click.stop="handleDel"
+    ></i>
+    <i
+      class="operate up el-icon-upload2"
+      title="上移"
+      @click.stop="handleMoveUp"
+    ></i>
+    <i
+      class="operate down el-icon-download"
+      title="下移"
+      @click.stop="handleMoveDown"
+    ></i>
   </div>
 </template>
 
@@ -43,12 +48,11 @@ export default defineComponent({
     info: Object,
   },
   setup: (props, { emit }) => {
-    const HandleClick = () => {
-      emit("on-click", props.index, props.info);
-    };
-    const handleDel = () => {
-      emit("on-del", props.index, props.info);
-    };
+    const HandleClick = () => emit("on-click", props.index, props.info);
+    const handleDel = () => emit("on-del", props.index, props.info);
+    const handleMoveUp = () => emit("on-moveup", props.index, props.info);
+    const handleMoveDown = () => emit("on-movedown", props.index, props.info);
+
     const HandleDrag = (e: any) => {
       const data = {
         type: "move-component",
@@ -70,6 +74,8 @@ export default defineComponent({
       HandleDragEnd,
       HandleClick,
       handleDel,
+      handleMoveUp,
+      handleMoveDown,
     };
   },
 });
@@ -85,24 +91,31 @@ export default defineComponent({
 .component-wrapper:hover {
   outline: 1px solid #fdcd00;
 }
-.component-wrapper:hover span.del {
+.component-wrapper:hover i.operate {
   display: flex;
 }
 .component-wrapper.active {
   opacity: 0.2;
   outline: 1px solid #db2727;
 }
-.component-wrapper span.del {
+.component-wrapper i.operate {
   position: absolute;
   cursor: pointer;
   top: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  width: 18px;
-  height: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
   display: none;
-  align-items: center;
-  justify-content: center;
+  padding: 4px;
+}
+.del {
+  right: 0;
+}
+.up {
+  right: 24px;
+}
+.down {
+  right: 48px;
 }
 </style>
