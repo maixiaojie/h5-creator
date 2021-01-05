@@ -2,6 +2,15 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
+ * @LastEditTime: 2021-01-05 16:57:17
+ * @Description: file content
+ * @FilePath: /h5/src/components/Header.vue
+ * @powerd by hundun
+-->
+<!--
+ * @Author: wenyujie
+ * @LastEditors: wenyujie
+ * @Date: 2020-12-31 14:35:36
  * @LastEditTime: 2020-12-31 17:42:50
  * @Description: file content
  * @FilePath: /h5/src/components/Header.vue
