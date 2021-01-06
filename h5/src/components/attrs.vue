@@ -2,24 +2,39 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 17:39:17
+ * @LastEditTime: 2021-01-06 11:39:35
  * @Description: 属性编辑器
  * @FilePath: /h5/src/components/attrs.vue
  * @powerd by hundun
 -->
 <template>
-  <div class="attrs"></div>
+  <div class="attrs">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="组件配置" name="attrsConfig"
+        ><AttrsComponent></AttrsComponent
+      ></el-tab-pane>
+      <el-tab-pane label="页面配置" name="pageConfig">配置管理</el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useStore } from "vuex";
+import AttrsComponent from "./attrs-component.vue";
 export default defineComponent({
   name: "Attrs",
-  components: {},
+  components: {
+    AttrsComponent,
+  },
   setup: () => {
     const store = useStore();
+    // const tabNames = ref(["attrsConfig", "pageConfig"]);
+    const activeTabName = ref("attrsConfig");
+    const handleClick = () => {};
     return {
+      activeTabName,
+      handleClick,
       components: computed(() => store.state.components),
     };
   },

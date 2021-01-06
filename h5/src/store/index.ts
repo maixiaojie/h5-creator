@@ -2,13 +2,24 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-05 17:48:44
+ * @LastEditTime: 2021-01-06 11:57:24
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
  */
 import { createStore } from "vuex";
 import { guid } from "../utils/index";
+const commonStyle = {
+  margin_top: 0,
+  margin_bottom: 0,
+  margin_left: 0,
+  margin_right: 0,
+  padding_top: 0,
+  padding_bottom: 0,
+  padding_left: 0,
+  padding_right: 0,
+  background_color: "#fff"
+};
 export default createStore({
   state: {
     // 组件列表  name需要唯一
@@ -64,10 +75,12 @@ export default createStore({
       if (comp.length > 0) {
         const componentInfo: any = Object.assign(
           {
-            uid: guid()
+            uid: guid(),
+            common_style: { ...commonStyle }
           },
           comp[0]
         );
+        console.log(componentInfo);
         state.page_info.components.push(componentInfo);
       }
     },
