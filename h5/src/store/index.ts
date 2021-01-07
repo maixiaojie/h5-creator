@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-06 11:57:24
+ * @LastEditTime: 2021-01-07 10:07:01
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
@@ -22,6 +22,9 @@ const commonStyle = {
 };
 export default createStore({
   state: {
+    workspace: {
+      activeComponentUid: ""
+    },
     // 组件列表  name需要唯一
     components: [
       {
@@ -69,7 +72,33 @@ export default createStore({
       components: []
     }
   },
+  getters: {
+    activeComponentUid(state) {
+      return state.workspace.activeComponentUid;
+    },
+    activeComponent(state) {
+      return state.page_info.components.find(
+        (comp: any) => comp.uid === state.workspace.activeComponentUid
+      );
+    }
+  },
   mutations: {
+    updateComponent(state: any, { uid, commonStyle }) {
+      console.log("update");
+      const target = state.page_info.components.find(
+        (comp: any) => comp.uid === uid
+      );
+      const component = Object.assign({}, target);
+      const index = state.page_info.components.findIndex(
+        (comp: any) => comp.uid === uid
+      );
+      if (target) {
+        if (commonStyle) component.common_style = commonStyle;
+        state.page_info.components[index] = component;
+      }
+      console.log(state);
+    },
+    // 添加组件
     addNewComponent(state: any, { name }) {
       const comp = state.components.filter((e: any) => e.name === name);
       if (comp.length > 0) {
@@ -80,13 +109,17 @@ export default createStore({
           },
           comp[0]
         );
-        console.log(componentInfo);
         state.page_info.components.push(componentInfo);
       }
     },
-    delComponent(state: any, index: number) {
+    // 删除组件
+    delComponent(state: any, { index, comp }) {
       state.page_info.components.splice(index, 1);
+      if (state.workspace.activeComponentUid === comp.uid) {
+        state.workspace.activeComponentUid = "";
+      }
     },
+    // 移动组件位置
     swapComponent(state: any, { oldIndex, newIndex }) {
       if (oldIndex !== newIndex) {
         const newPages = [...state.page_info.components];
@@ -94,8 +127,27 @@ export default createStore({
         newPages.splice(newIndex, 0, state.page_info.components[oldIndex]);
         state.page_info.components = [...newPages];
       }
+    },
+    // 激活组件
+    activateComponent(state: any, { index, comp }) {
+      console.log(state);
+      if (state.workspace.activeComponentUid !== comp.uid) {
+        state.workspace.activeComponentUid = comp.uid;
+      }
     }
   },
-  actions: {},
+  actions: {
+    updateActiveComponent({ commit }, payload) {
+      console.log('avtive')
+      commit("activateComponent", payload);
+    },
+    updateActiveCommonStyle({ commit, state }, commonStyle) {
+      console.log('commit')
+      commit("updateComponent", {
+        uid: state.workspace.activeComponentUid,
+        commonStyle
+      });
+    }
+  },
   modules: {}
 });

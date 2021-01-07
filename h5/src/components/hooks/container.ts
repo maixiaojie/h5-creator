@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-05 11:51:17
- * @LastEditTime: 2021-01-05 16:02:18
+ * @LastEditTime: 2021-01-06 18:53:18
  * @Description: file content
  * @FilePath: /h5/src/components/hooks/container.ts
  * @powerd by hundun
@@ -44,10 +44,11 @@ export const useComponentHooks = () => {
   const newIndex = ref(0);
   const activeIndex = ref(-1);
   const handleCompClick = (i: number, comp: any) => {
-    console.log(i, comp);
+    console.log(comp);
+    store.dispatch("updateActiveComponent", { index: i, comp });
   };
   const handleCompDel = (i: number, comp: any) => {
-    store.commit("delComponent", i);
+    store.commit("delComponent", { index: i, comp });
   };
   // 交换两个组件的位置
   const swagComp = (oldIndex: number, newIndex: number) => {
@@ -75,6 +76,9 @@ export const useComponentHooks = () => {
     activeIndex.value = -1;
   };
   return {
+    activeComponentUid: computed(
+      () => store.state.workspace.activeComponentUid
+    ),
     oldIndex,
     newIndex,
     activeIndex,

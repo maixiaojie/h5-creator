@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-05 16:51:51
+ * @LastEditTime: 2021-01-06 16:11:38
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -20,7 +20,10 @@
         <ComponentWrapper
           :index="index"
           :info="page"
-          :class="{ active: index === activeIndex && oldIndex === index }"
+          :class="{
+            draging: index === activeIndex && oldIndex === index,
+            active: page.uid === activeComponentUid,
+          }"
           @on-click="handleCompClick"
           @on-del="handleCompDel"
           @on-moveup="handleCompMoveUp"
@@ -61,6 +64,7 @@ export default defineComponent({
       handleDragEnter,
     } = useContainerHooks();
     const {
+      activeComponentUid,
       oldIndex,
       activeIndex,
       handleCompClick,
@@ -79,6 +83,7 @@ export default defineComponent({
       handleDragLeave,
       pages,
       activeIndex,
+      activeComponentUid,
       oldIndex,
       handleCompClick,
       handleCompDel,

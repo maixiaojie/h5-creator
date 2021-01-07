@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-06 11:11:00
- * @LastEditTime: 2021-01-06 11:52:35
+ * @LastEditTime: 2021-01-07 10:24:28
  * @Description: file content
  * @FilePath: /h5/src/components/attrs-config/common.vue
  * @powerd by hundun
@@ -96,12 +96,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs } from "vue";
+import { computed, defineComponent, ref, reactive, toRefs, watch } from "vue";
 import { useStore } from "vuex";
 export default defineComponent({
   name: "AttrsConfigCommon",
   components: {},
-  setup: () => {
+  props: {
+    attrs: Object,
+  },
+  setup: (props) => {
     const store = useStore();
     const formRef = ref(null);
     const predefineColors = ref([
@@ -133,8 +136,18 @@ export default defineComponent({
         background_color: "#fff",
       },
     });
-    const handleChange = () => {
-      console.log(data);
+    watch(
+      () => store.getters.activeComponentUid,
+      (val) => {
+        console.log("watch");
+        const currentComp = store.getters.activeComponent;
+        console.log(store.state);
+        Object.assign(data.form, currentComp.common_style);
+      }
+    );
+    const handleChange = (c: number | string, old: number | undefined) => {
+      console.log("change");
+      store.dispatch("updateActiveCommonStyle", data.form);
     };
     return {
       ...toRefs(data),

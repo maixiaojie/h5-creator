@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-04 10:25:21
- * @LastEditTime: 2021-01-05 16:10:59
+ * @LastEditTime: 2021-01-06 16:30:03
  * @Description: file content
  * @FilePath: /h5/src/components/component-wrapper.vue
  * @powerd by hundun
@@ -89,13 +89,18 @@ export default defineComponent({
   position: relative;
 }
 .component-wrapper:hover {
-  outline: 1px solid #fdcd00;
+  outline: 2px solid rgb(64 158 255);
+  outline-offset: -2px;
 }
 .component-wrapper:hover i.operate {
   display: flex;
 }
-.component-wrapper.active {
+.component-wrapper.draging {
   filter: blur(2px);
+}
+.component-wrapper.active {
+  outline: 2px solid rgb(64 158 255);
+  outline-offset: -2px;
 }
 .component-wrapper i.operate {
   position: absolute;
