@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-06 16:11:38
+ * @LastEditTime: 2021-01-08 14:27:35
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun
@@ -24,6 +24,7 @@
             draging: index === activeIndex && oldIndex === index,
             active: page.uid === activeComponentUid,
           }"
+          :style="getStyle(page)"
           @on-click="handleCompClick"
           @on-del="handleCompDel"
           @on-moveup="handleCompMoveUp"
@@ -67,6 +68,7 @@ export default defineComponent({
       activeComponentUid,
       oldIndex,
       activeIndex,
+      getStyle,
       handleCompClick,
       handleCompDel,
       handleCompMoveUp,
@@ -83,6 +85,7 @@ export default defineComponent({
       handleDragLeave,
       pages,
       activeIndex,
+      getStyle,
       activeComponentUid,
       oldIndex,
       handleCompClick,

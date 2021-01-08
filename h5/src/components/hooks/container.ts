@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-05 11:51:17
- * @LastEditTime: 2021-01-06 18:53:18
+ * @LastEditTime: 2021-01-08 15:02:27
  * @Description: file content
  * @FilePath: /h5/src/components/hooks/container.ts
  * @powerd by hundun
@@ -44,7 +44,6 @@ export const useComponentHooks = () => {
   const newIndex = ref(0);
   const activeIndex = ref(-1);
   const handleCompClick = (i: number, comp: any) => {
-    console.log(comp);
     store.dispatch("updateActiveComponent", { index: i, comp });
   };
   const handleCompDel = (i: number, comp: any) => {
@@ -75,6 +74,28 @@ export const useComponentHooks = () => {
     swagComp(oldIndex.value, newIndex.value);
     activeIndex.value = -1;
   };
+  const tocss = (obj: any) => {
+    const transAttr = (str: any) => {
+      return str.replace(/_(\w)/, function() {
+        return arguments[1].toUpperCase();
+      });
+    };
+    const res: any = {};
+    for (var key in obj) {
+      if (typeof obj[key] === "number") {
+        res[transAttr(key)] = obj[key] + "px";
+      } else {
+        res[transAttr(key)] = obj[key];
+      }
+    }
+    return res;
+  };
+  const getStyle = (comp: any) => {
+    const commonStyle = tocss(comp.common_style);
+    return {
+      ...commonStyle
+    };
+  };
   return {
     activeComponentUid: computed(
       () => store.state.workspace.activeComponentUid
@@ -88,6 +109,7 @@ export const useComponentHooks = () => {
     handleCompMoveDown,
     handleCompDragStart,
     handleCompDragEnter,
-    handleCompDragEnd
+    handleCompDragEnd,
+    getStyle
   };
 };

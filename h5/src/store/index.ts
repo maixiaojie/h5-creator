@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-07 10:07:01
+ * @LastEditTime: 2021-01-08 14:23:52
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
@@ -84,7 +84,6 @@ export default createStore({
   },
   mutations: {
     updateComponent(state: any, { uid, commonStyle }) {
-      console.log("update");
       const target = state.page_info.components.find(
         (comp: any) => comp.uid === uid
       );
@@ -96,7 +95,6 @@ export default createStore({
         if (commonStyle) component.common_style = commonStyle;
         state.page_info.components[index] = component;
       }
-      console.log(state);
     },
     // 添加组件
     addNewComponent(state: any, { name }) {
@@ -130,7 +128,6 @@ export default createStore({
     },
     // 激活组件
     activateComponent(state: any, { index, comp }) {
-      console.log(state);
       if (state.workspace.activeComponentUid !== comp.uid) {
         state.workspace.activeComponentUid = comp.uid;
       }
@@ -138,11 +135,9 @@ export default createStore({
   },
   actions: {
     updateActiveComponent({ commit }, payload) {
-      console.log('avtive')
       commit("activateComponent", payload);
     },
     updateActiveCommonStyle({ commit, state }, commonStyle) {
-      console.log('commit')
       commit("updateComponent", {
         uid: state.workspace.activeComponentUid,
         commonStyle

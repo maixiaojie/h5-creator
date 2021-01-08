@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-06 11:11:00
- * @LastEditTime: 2021-01-07 10:24:28
+ * @LastEditTime: 2021-01-08 15:09:57
  * @Description: file content
  * @FilePath: /h5/src/components/attrs-config/common.vue
  * @powerd by hundun
@@ -139,15 +139,14 @@ export default defineComponent({
     watch(
       () => store.getters.activeComponentUid,
       (val) => {
-        console.log("watch");
-        const currentComp = store.getters.activeComponent;
-        console.log(store.state);
-        Object.assign(data.form, currentComp.common_style);
+        if (val) {
+          const currentComp = store.getters.activeComponent;
+          Object.assign(data.form, currentComp.common_style);
+        }
       }
     );
     const handleChange = (c: number | string, old: number | undefined) => {
-      console.log("change");
-      store.dispatch("updateActiveCommonStyle", data.form);
+      store.dispatch("updateActiveCommonStyle", Object.assign({}, data.form));
     };
     return {
       ...toRefs(data),
