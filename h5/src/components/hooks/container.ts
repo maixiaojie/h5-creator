@@ -2,13 +2,15 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-05 11:51:17
- * @LastEditTime: 2021-01-08 15:02:27
+ * @LastEditTime: 2021-01-08 19:06:35
  * @Description: file content
  * @FilePath: /h5/src/components/hooks/container.ts
  * @powerd by hundun
  */
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { transform } from "../../utils/css2js";
+import { Message } from 'element3'
 export const useContainerHooks = () => {
   const store = useStore();
   const handleDrop = (e: any) => {
@@ -44,6 +46,7 @@ export const useComponentHooks = () => {
   const newIndex = ref(0);
   const activeIndex = ref(-1);
   const handleCompClick = (i: number, comp: any) => {
+    console.log(comp);
     store.dispatch("updateActiveComponent", { index: i, comp });
   };
   const handleCompDel = (i: number, comp: any) => {
@@ -91,8 +94,15 @@ export const useComponentHooks = () => {
     return res;
   };
   const getStyle = (comp: any) => {
+    let styles = {}
+    try {
+      styles = transform(comp.styles);
+    } catch (e) {
+      Message.error(e.message)
+    }
     const commonStyle = tocss(comp.common_style);
     return {
+      ...styles,
       ...commonStyle
     };
   };

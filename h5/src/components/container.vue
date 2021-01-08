@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:35:36
- * @LastEditTime: 2021-01-08 14:27:35
+ * @LastEditTime: 2021-01-08 17:12:14
  * @Description: file content
  * @FilePath: /h5/src/components/container.vue
  * @powerd by hundun

@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2020-12-31 14:39:50
- * @LastEditTime: 2021-01-08 14:23:52
+ * @LastEditTime: 2021-01-08 17:07:13
  * @Description: data store
  * @FilePath: /h5/src/store/index.ts
  * @powerd by hundun
@@ -30,7 +30,6 @@ export default createStore({
       {
         name: "image",
         label: "图片",
-        style: "",
         attrs: {
           // 图片url
           src: "http://seopic.699pic.com/photo/50051/4111.jpg_wh1200.jpg"
@@ -83,7 +82,7 @@ export default createStore({
     }
   },
   mutations: {
-    updateComponent(state: any, { uid, commonStyle }) {
+    updateComponent(state: any, { uid, commonStyle, styles }) {
       const target = state.page_info.components.find(
         (comp: any) => comp.uid === uid
       );
@@ -92,7 +91,9 @@ export default createStore({
         (comp: any) => comp.uid === uid
       );
       if (target) {
+        console.log(styles);
         if (commonStyle) component.common_style = commonStyle;
+        if (styles) component.styles = styles;
         state.page_info.components[index] = component;
       }
     },
@@ -103,6 +104,7 @@ export default createStore({
         const componentInfo: any = Object.assign(
           {
             uid: guid(),
+            styles: "",
             common_style: { ...commonStyle }
           },
           comp[0]
@@ -141,6 +143,12 @@ export default createStore({
       commit("updateComponent", {
         uid: state.workspace.activeComponentUid,
         commonStyle
+      });
+    },
+    updateActiveStyle({ commit, state }, styles) {
+      commit("updateComponent", {
+        uid: state.workspace.activeComponentUid,
+        styles
       });
     }
   },

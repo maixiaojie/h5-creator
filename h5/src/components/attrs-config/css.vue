@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-06 11:11:00
- * @LastEditTime: 2021-01-06 11:18:42
+ * @LastEditTime: 2021-01-08 17:30:55
  * @Description: file content
  * @FilePath: /h5/src/components/attrs-config/css.vue
  * @powerd by hundun
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs } from "vue";
+import { defineComponent, ref, reactive, toRefs, watch } from "vue";
 import { useStore } from "vuex";
 export default defineComponent({
   name: "AttrsConfigCSS",
@@ -34,14 +34,23 @@ export default defineComponent({
         css: "",
       },
     });
+    watch(
+      () => store.getters.activeComponentUid,
+      (val) => {
+        if (val) {
+          const currentComp = store.getters.activeComponent;
+          data.form.css = currentComp.style;
+        }
+      }
+    );
     const onSubmit = () => {
-      console.log("submit!");
+      const styles = data.form.css;
+      store.dispatch("updateActiveStyle", styles);
     };
     return {
       ...toRefs(data),
       formRef,
       onSubmit,
-      components: computed(() => store.state.components),
     };
   },
 });

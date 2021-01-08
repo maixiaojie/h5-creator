@@ -2,7 +2,7 @@
  * @Author: wenyujie
  * @LastEditors: wenyujie
  * @Date: 2021-01-06 11:11:00
- * @LastEditTime: 2021-01-08 15:09:57
+ * @LastEditTime: 2021-01-08 17:02:27
  * @Description: file content
  * @FilePath: /h5/src/components/attrs-config/common.vue
  * @powerd by hundun
@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs, watch } from "vue";
+import { defineComponent, ref, reactive, toRefs, watch } from "vue";
 import { useStore } from "vuex";
 export default defineComponent({
   name: "AttrsConfigCommon",
@@ -153,7 +153,6 @@ export default defineComponent({
       formRef,
       predefineColors,
       handleChange,
-      components: computed(() => store.state.components),
     };
   },
 });
